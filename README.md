@@ -12,7 +12,6 @@ Additionally, the repository includes manual testing documents for further testi
 - **API Tests:** Postman, JavaScript
 - **Additional Tools:** Docker, Node.js
 
----
 
 ## Project Structure
 
@@ -55,7 +54,6 @@ Additionally, the repository includes manual testing documents for further testi
 - **Postman** or **Newman** installed
 - Import the Postman collections and environment from the `tests/api` folder.
 
----
 
 ## Running the Tests
 
@@ -80,13 +78,16 @@ You can control whether the tests run in headless or headed mode by setting the 
   npx playwright test
   ```
 
-  ### Running API Tests (Postman)
+### Running API Tests (Postman)
 
 You can run the API tests in Postman by importing the collections and environment files from `tests/api/collections/` and `tests/api/environment/`. Alternatively, run them via Newman using the following command:
 
 ```bash
 newman run tests/api/collections/ownersCollection.postman_collection.json -e tests/api/environment/Local.postman_environment.json
 ```
+
+---
+
 ## Continuous Integration Setup
 
 ### Playwright CI with Docker
@@ -125,7 +126,7 @@ Some Postman tests may fail, especially those with titles containing `[BUG]`. Th
 The following manual testing documents have been added to the repository under the `manual-testing-documents` folder:
 
 1. **Manual Test Cases for 2 Functionalities**: This document contains detailed manual test cases for two key functionalities of the application.
-   - File: `Manual Test Cases for 2 Functionalities.xlsx`
+   - File: `Manual_Test_Cases_for_2_Functionalities.xlsx`
 
 2. **Overall Evaluation Report**: This document provides a comprehensive evaluation report based on the overall testing conducted.
    - File: `Overall Evaluation Report.xlsx`
