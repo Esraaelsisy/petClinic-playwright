@@ -1,9 +1,0 @@
-import { Page } from "@playwright/test"
-
-export class OwnersPage{
-
-    private readonly page: Page
-    constructor(page: Page){
-
-    }
-}

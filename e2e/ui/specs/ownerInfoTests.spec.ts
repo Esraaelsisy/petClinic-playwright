@@ -1,11 +1,10 @@
 import {  test , expect} from "../fixtures/my-hooks"
 import { PageManager } from "../pages/pageManager"
-import{ OwnerTestData } from "../data/uiTestData/uiTestData.json"
+import{ OwnerTestData } from "../data/uiTestData.json"
 
 let pm: PageManager
 
 test.describe('Edit Owners Tests',  async() =>{
-
   test('edit Owner Last Name', async({page, ownersFixture})=>{ 
     const pm = new PageManager(page)
     await pm.onOwnersPage().selectAnOwnerFromListWithCriteria('Franklin')
@@ -31,7 +30,6 @@ test.describe('Register Owners Tests',  async() =>{
     await pm.onOwnerOverviewPage().validateOwnerDetails(OwnerTestData.firstName, OwnerTestData.lastName, 
       OwnerTestData.address, OwnerTestData.city, OwnerTestData.telephone)
 })
-
   test('Add a new owner without First Name', async({page, registerationFixture})=>{
     const pm = new PageManager(page)
     await pm.onOwnerInfoPage().registerNewOwner("",OwnerTestData.lastName, OwnerTestData.address

@@ -1,6 +1,6 @@
 import { test , expect} from "../fixtures/my-hooks"
 import { PageManager } from "../pages/pageManager"
-import {VisitsTestData} from "../data/uiTestData/uiTestData.json"
+import {VisitsTestData} from "../data/uiTestData.json"
 
 let pm: PageManager
 
