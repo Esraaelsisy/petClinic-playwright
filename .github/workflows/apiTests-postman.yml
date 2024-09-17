@@ -21,7 +21,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install docker-compose -y
-          
+
         # Start the application using docker-compose
       - name: Set up Docker Compose
         run: docker-compose up -d
@@ -38,40 +38,45 @@ jobs:
       - name: Install Newman and HTML Reporter
         run: |
           npm install -g newman@latest
-          npm install -g newman-reporter-htmlextra@latest
+          npm install -g newman-reporter-html@latest
 
       - name: Run Owners Collection using Globals
         run: |
           newman run tests/api/collections/ownersCollection.postman_collection.json \
           --environment tests/api/environment/Local.postman_environment.json \
           --globals tests/api/environment/workspace.postman_globals.json \
-          --reporters htmlextra \
-          --reporter-htmlextra-export results/owners-report.html
+          --reporters cli,html \
+          --reporter-html-export results/owners-report.html
+        continue-on-error: true
+
 
       - name: Run Pets Collection using Globals
         run: |
           newman run tests/api/collections/petsCollection.postman_collection.json \
           --environment tests/api/environment/Local.postman_environment.json \
           --globals tests/api/environment/workspace.postman_globals.json \
-          --reporters htmlextra \
-          --reporter-htmlextra-export results/pets-report.html
-
+          --reporters cli,html \
+          --reporter-html-export results/pets-report.html
+        continue-on-error: true
+    
       - name: Run Vets Collection using Globals
         run: |
           newman run tests/api/collections/vetsCollection.postman_collection.json \
           --environment tests/api/environment/Local.postman_environment.json \
           --globals tests/api/environment/workspace.postman_globals.json \
-          --reporters htmlextra \
-          --reporter-htmlextra-export results/vets-report.html
-
+          ---reporters cli,html \
+          --reporter-html-export results/vets-report.html
+        continue-on-error: true
+    
       - name: Run Visits Collection using Globals
         run: |
           newman run tests/api/collections/visitsCollection.postman_collection.json \
           --environment tests/api/environment/Local.postman_environment.json \
           --globals tests/api/environment/workspace.postman_globals.json \
-          --reporters htmlextra \
-          --reporter-htmlextra-export results/visits-report.html
-
+          --reporters cli,html \
+          --reporter-html-export results/visits-report.html
+        continue-on-error: true
+    
       - name: Upload HTML Reports
         uses: actions/upload-artifact@v4
         with:

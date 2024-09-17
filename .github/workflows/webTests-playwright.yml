@@ -47,10 +47,21 @@ jobs:
 
       - name: Run Playwright tests with headless=${{ matrix.headless }}
         run: |
-          npx playwright test --headless=${{ matrix.headless }}
+          if [ "${{ matrix.headless }}" = "true" ]; 
+          then npx playwright test --headless; 
+          else npx playwright test --headed; fi
       
-      - name: Run only specific test file (e.g., ownerInfoTests)
+      - name: Run Owner Tests file 
         run: npx playwright test e2e/ui/specs/ownerInfoTests.spec.ts    
+       
+      - name: Run Pets Tests file 
+        run: npx playwright test e2e/ui/specs/petsTests.spec.ts    
+        
+      - name: Run Visits Tests file 
+        run: npx playwright test e2e/ui/specs/visitsTests.spec.ts    
+
+      - name: Run Vets Tests file 
+        run: npx playwright test e2e/ui/specs/vetsTests.spec.ts   
 
       - name: Upload Playwright test report
         uses: actions/upload-artifact@v4
