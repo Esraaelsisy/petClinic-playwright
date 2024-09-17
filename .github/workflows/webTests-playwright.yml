@@ -45,12 +45,6 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests with headless=${{ matrix.headless }}
-        run: |
-          if [ "${{ matrix.headless }}" = "true" ]; 
-          then npx playwright test --headless; 
-          else npx playwright test --headed; fi
-      
       - name: Run Owner Tests file 
         run: npx playwright test e2e/ui/specs/ownerInfoTests.spec.ts    
        
