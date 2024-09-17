@@ -1,0 +1,909 @@
+{
+	"info": {
+		"_postman_id": "24738e28-af49-44f4-90f6-7a148f0c7c80",
+		"name": "ownersCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38201107"
+	},
+	"item": [
+		{
+			"name": "Create Owners",
+			"item": [
+				{
+					"name": "Create a Valid Owner- Success Request[BUG: Missing Body response]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The pet owner was sucessfully added Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Check if response body is not empty and contains valid JSON\", function () {",
+									"",
+									"    // Check if the response body is empty",
+									"    if (pm.response.to.be.json) {",
+									"       ",
+									"            // Try to parse the response as JSON",
+									"            var jsonData = pm.response.json();",
+									"",
+									"            // Proceed with further checks if the body contains valid JSON",
+									"            if(iterationData.length>0)",
+									"            {",
+									"            pm.expect(jsonData).to.have.property('id');",
+									"            pm.expect(jsonData.firstName).to.eql(pm.iterationData.get('firstName'));",
+									"            pm.expect(jsonData.lastName).to.eql(pm.iterationData.get('lastName'));",
+									"            pm.expect(jsonData.address).to.eql(pm.iterationData.get('address'));",
+									"            pm.expect(jsonData.city).to.eql(pm.iterationData.get('city'));",
+									"            pm.expect(jsonData.telephone).to.eql(pm.iterationData.get('telephone'));",
+									"        }",
+									"        else {",
+									"            // Extract variables for comparison",
+									"        var { firstName, lastName, address, city, telephone } = pm.variables.toObject();",
+									"            pm.expect(jsonData).to.have.property('id');",
+									"            pm.expect(jsonData.firstName).to.eql(firstName);",
+									"            pm.expect(jsonData.lastName).to.eql(lastName);",
+									"            pm.expect(jsonData.address).to.eql(address);",
+									"            pm.expect(jsonData.city).to.eql(city);",
+									"            pm.expect(jsonData.telephone).to.eql(telephone);",
+									"        }",
+									"    }",
+									"     else {",
+									"        // Handle empty response body",
+									"       console.log(\"Response body is empty\");",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"{{firstName}}\",\n  \"lastName\": \"{{lastName}}\",\n  \"address\": \"{{address}}\",\n  \"city\": \"{{city}}\",\n  \"telephone\": \"{{telephone}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/owners"
+					},
+					"response": []
+				},
+				{
+					"name": "Create an Invalid Owner- Missing lastName Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response has Bad Request error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Validate the basic structure of the error response",
+									"    pm.expect(jsonData).to.have.property('status', 400);",
+									"    pm.expect(jsonData).to.have.property('error', 'Bad Request');",
+									"    pm.expect(jsonData).to.have.property('message').to.contain(\"Validation failed\");",
+									"    pm.expect(jsonData).to.have.property('path', '/owners');",
+									"    ",
+									"    // Validate the detailed error for missing lastName",
+									"    pm.expect(jsonData.errors).to.be.an('array').that.is.not.empty;",
+									"    pm.expect(jsonData.errors[0]).to.have.property('field', 'lastName');",
+									"    pm.expect(jsonData.errors[0]).to.have.property('defaultMessage', 'must not be empty');",
+									"    pm.expect(jsonData.errors[0]).to.have.property('code', 'NotEmpty');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"{{firstName}}\",\n  \"address\": \"{{address}}\",\n  \"city\": \"{{city}}\",\n  \"telephone\": \"{{telephone}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/owners"
+					},
+					"response": []
+				},
+				{
+					"name": "Create an Invalid Owner- Missing firstName Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response has Bad Request error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Validate the basic structure of the error response",
+									"    pm.expect(jsonData).to.have.property('status', 400);",
+									"    pm.expect(jsonData).to.have.property('error', 'Bad Request');",
+									"    pm.expect(jsonData).to.have.property('message').to.contain(\"Validation failed\");",
+									"    pm.expect(jsonData).to.have.property('path', '/owners');",
+									"    ",
+									"    // Validate the detailed error for missing lastName",
+									"    pm.expect(jsonData.errors).to.be.an('array').that.is.not.empty;",
+									"    pm.expect(jsonData.errors[0]).to.have.property('field', 'firstName');",
+									"    pm.expect(jsonData.errors[0]).to.have.property('defaultMessage', 'must not be empty');",
+									"    pm.expect(jsonData.errors[0]).to.have.property('code', 'NotEmpty');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lastName\": \"{{lastName}}\",\n  \"address\": \"{{address}}\",\n  \"city\": \"{{city}}\",\n  \"telephone\": \"{{telephone}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/owners"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Owners",
+			"item": [
+				{
+					"name": "Get Owners By OwnerID-Success Request",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(pm.iterationData.length>0)",
+									"{",
+									"pm.globals.set(\"ownerId\", pm.iterationData.get('ownerId'));}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains valid owner data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Check that the owner's details are returned correctly",
+									"    if (pm.iterationData.length>0)",
+									"    {",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData.id).to.eql(pm.iterationData.get(\"ownerID\"));",
+									"    pm.expect(jsonData.firstName).to.eql(pm.iterationData.get(\"firstName\"));",
+									"    pm.expect(jsonData.lastName).to.eql(pm.iterationData.get(\"lastName\"));",
+									"    pm.expect(jsonData.address).to.eql(pm.iterationData.get(\"address\"));",
+									"    pm.expect(jsonData.city).to.eql(pm.iterationData.get(\"city\"));",
+									"    pm.expect(jsonData.telephone).to.eql(pm.iterationData.get(\"telephone\"));",
+									"}",
+									"else{",
+									"     // Extract variables for comparison",
+									"        var { firstName, lastName, address, city, telephone } = pm.variables.toObject();",
+									"        // Check that the owner's details are returned correctly",
+									"        pm.expect(jsonData).to.have.property('id');",
+									"        //pm.expect(jsonData.id).to.eql(pm.variables.get('ownerId'));",
+									"        pm.expect(jsonData.firstName).to.eql(firstName);",
+									"        pm.expect(jsonData.lastName).to.eql(lastName);",
+									"        pm.expect(jsonData.address).to.eql(address);",
+									"        pm.expect(jsonData.city).to.eql(city);",
+									"        pm.expect(jsonData.telephone).to.eql(telephone);",
+									"",
+									"}",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/owners/:ownerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"owners",
+								":ownerId"
+							],
+							"variable": [
+								{
+									"key": "ownerId",
+									"value": "{{ownerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Owners By OwnerID-Not Found Request [BUG:Wrong Response]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Owner Not Found with Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response has Bad Request error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Validate the basic structure of the error response",
+									"    pm.expect(jsonData).to.have.property('status', 404);",
+									"    pm.expect(jsonData).to.have.property('error', 'Not Found Error');",
+									"    pm.expect(jsonData).to.have.property('message', 'Owner not found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(pm.iterationData.length>0)",
+									"{",
+									"pm.globals.set(\"notFoundOwnerId\", pm.iterationData.get('notFoundOwnerId'));}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/owners/:ownerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"owners",
+								":ownerId"
+							],
+							"variable": [
+								{
+									"key": "ownerId",
+									"value": "{{notFoundOwnerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Owners By lastName-Invalid Request [Not Implemented]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains valid owner data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Check that the owner's details are returned correctly",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData.id).to.eql(1);",
+									"    pm.expect(jsonData.firstName).to.eql(\"George\");",
+									"    pm.expect(jsonData.lastName).to.eql(\"Franklin\");",
+									"    pm.expect(jsonData.address).to.eql(\"110 W. Liberty St.\");",
+									"    pm.expect(jsonData.city).to.eql(\"Madison\");",
+									"    pm.expect(jsonData.telephone).to.eql(\"6085551023\");",
+									"    ",
+									"    // Check if the pets array is returned correctly",
+									"    pm.expect(jsonData.pets).to.be.an('array');",
+									"    if (jsonData.pets.length > 0) {",
+									"        pm.expect(jsonData.pets[0].name).to.eql(\"Leo\");",
+									"        pm.expect(jsonData.pets[0].type.name).to.eql(\"cat\");",
+									"        pm.expect(jsonData.pets[0].visits).to.be.an('array');",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/owners?lastName={{lastName}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"owners"
+							],
+							"query": [
+								{
+									"key": "lastName",
+									"value": "{{lastName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update Owners",
+			"item": [
+				{
+					"name": "Update Owner- Success Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains valid owner data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    if(pm.iterationData.length > 0){",
+									"        // Check that the owner's details are returned correctly",
+									"        pm.expect(jsonData).to.have.property('id');",
+									"        //pm.expect(jsonData.id).to.eql(pm.variables.get('ownerId'));",
+									"        pm.expect(jsonData.firstName).to.eql(pm.iterationData.get('firstName'));",
+									"        pm.expect(jsonData.lastName).to.eql(pm.iterationData.get('lastName'));",
+									"        pm.expect(jsonData.address).to.eql(pm.iterationData.get('address'));",
+									"        pm.expect(jsonData.city).to.eql(pm.iterationData.get('city'));",
+									"        pm.expect(jsonData.telephone).to.eql(pm.iterationData.get('telephone'));",
+									"    }",
+									"    else {",
+									"        // Extract variables for comparison",
+									"        var { firstName, lastName, address, city, telephone } = pm.variables.toObject();",
+									"",
+									"        // Check that the owner's details are returned correctly",
+									"        pm.expect(jsonData).to.have.property('id');",
+									"        //pm.expect(jsonData.id).to.eql(pm.variables.get('ownerId'));",
+									"        pm.expect(jsonData.firstName).to.eql(firstName);",
+									"        pm.expect(jsonData.lastName).to.eql(lastName);",
+									"        pm.expect(jsonData.address).to.eql(address);",
+									"        pm.expect(jsonData.city).to.eql(city);",
+									"        pm.expect(jsonData.telephone).to.eql(telephone);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(pm.iterationData.length>0)",
+									"{",
+									"pm.globals.set(\"ownerId\", pm.iterationData.get('ownerId'));}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"{{firstName}}\",\n  \"lastName\": \"{{lastName}}\",\n  \"address\": \"{{address}}\",\n  \"city\": \"{{city}}\",\n  \"telephone\": \"{{telephone}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/owners/:ownerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"owners",
+								":ownerId"
+							],
+							"variable": [
+								{
+									"key": "ownerId",
+									"value": "{{ownerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Owner- Missing lastName Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response has Bad Request error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Validate the basic structure of the error response",
+									"    pm.expect(jsonData).to.have.property('status', 400);",
+									"    pm.expect(jsonData).to.have.property('error', 'Bad Request');",
+									"    pm.expect(jsonData).to.have.property('message').to.contain(\"Validation failed\");",
+									"    pm.expect(jsonData).to.have.property('path').to.contain('/owners/');",
+									"    ",
+									"    // Validate the detailed error for missing lastName",
+									"    pm.expect(jsonData.errors).to.be.an('array').that.is.not.empty;",
+									"    pm.expect(jsonData.errors[0]).to.have.property('field', 'lastName');",
+									"    pm.expect(jsonData.errors[0]).to.have.property('defaultMessage', 'must not be empty');",
+									"    pm.expect(jsonData.errors[0]).to.have.property('code', 'NotEmpty');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(pm.iterationData.length>0)",
+									"{",
+									"pm.globals.set(\"ownerId\", pm.iterationData.get('ownerId'));",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"{{firstName}}\",\n  \"address\": \"{{address}}\",\n  \"city\": \"{{city}}\",\n  \"telephone\": \"{{telephone}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/owners/:ownerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"owners",
+								":ownerId"
+							],
+							"variable": [
+								{
+									"key": "ownerId",
+									"value": "{{ownerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Owner- Not Found Request [BUG:Wrong Response]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Owner Not Found with Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response has Bad Request error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Validate the basic structure of the error response",
+									"    pm.expect(jsonData).to.have.property('status', 404);",
+									"    pm.expect(jsonData).to.have.property('error', 'Not Found Error');",
+									"    pm.expect(jsonData).to.have.property('message', 'Owner not found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(pm.iterationData.length>0)",
+									"{",
+									"pm.globals.set(\"notFoundOwnerId\", pm.iterationData.get('notFoundOwnerId'));",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"{{firstName}}\",\n  \"lastName\": \"{{lastName}}\",\n  \"address\": \"{{address}}\",\n  \"city\": \"{{city}}\",\n  \"telephone\": \"{{telephone}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/owners/:ownerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"owners",
+								":ownerId"
+							],
+							"variable": [
+								{
+									"key": "ownerId",
+									"value": "{{notFoundOwnerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete Owners",
+			"item": [
+				{
+					"name": "Delete Owner- Not Found Request [Not Implemented]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Owner Not Found with Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Response has Bad Request error\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Validate the basic structure of the error response",
+									"    pm.expect(jsonData).to.have.property('status', 404);",
+									"    pm.expect(jsonData).to.have.property('error', 'Not Found Error');",
+									"    pm.expect(jsonData).to.have.property('message', 'Owner not found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(pm.iterationData.length>0)",
+									"{",
+									"pm.globals.set(\"notFoundOwnerId\", pm.iterationData.get('notFoundOwnerId'));",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/owners/:ownerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"owners",
+								":ownerId"
+							],
+							"variable": [
+								{
+									"key": "ownerId",
+									"value": "{{notFoundOwnerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Owner- Success Request [Not Implemented]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response contains valid owner data\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    // Check that the owner's details are returned correctly",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData.id).to.eql(1);",
+									"    pm.expect(jsonData.firstName).to.eql(\"George\");",
+									"    pm.expect(jsonData.lastName).to.eql(\"Franklin\");",
+									"    pm.expect(jsonData.address).to.eql(\"Osdorpplein 900 St.\");",
+									"    pm.expect(jsonData.city).to.eql(\"Amsterdam\");",
+									"    pm.expect(jsonData.telephone).to.eql(\"6085551023\");",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if(pm.iterationData.length>0)",
+									"{",
+									"pm.globals.set(\"ownerId\", pm.iterationData.get('ownerId'));",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/owners/:ownerId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"owners",
+								":ownerId"
+							],
+							"variable": [
+								{
+									"key": "ownerId",
+									"value": "{{ownerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
