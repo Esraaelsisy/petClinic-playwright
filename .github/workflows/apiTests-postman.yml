@@ -1,0 +1,79 @@
+name: Postman API Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  newman-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Install Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose -y
+          
+        # Start the application using docker-compose
+      - name: Set up Docker Compose
+        run: docker-compose up -d
+
+      # Wait for the application to be ready (adjust sleep time if necessary)
+      - name: Wait for the app to be ready
+        run: sleep 20
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'
+
+      - name: Install Newman and HTML Reporter
+        run: |
+          npm install -g newman@latest
+          npm install -g newman-reporter-htmlextra@latest
+
+      - name: Run Owners Collection using Globals
+        run: |
+          newman run tests/api/collections/ownersCollection.postman_collection.json \
+          --environment tests/api/environment/Local.postman_environment.json \
+          --globals tests/api/environment/workspace.postman_globals.json \
+          --reporters htmlextra \
+          --reporter-htmlextra-export results/owners-report.html
+
+      - name: Run Pets Collection using Globals
+        run: |
+          newman run tests/api/collections/petsCollection.postman_collection.json \
+          --environment tests/api/environment/Local.postman_environment.json \
+          --globals tests/api/environment/workspace.postman_globals.json \
+          --reporters htmlextra \
+          --reporter-htmlextra-export results/pets-report.html
+
+      - name: Run Vets Collection using Globals
+        run: |
+          newman run tests/api/collections/vetsCollection.postman_collection.json \
+          --environment tests/api/environment/Local.postman_environment.json \
+          --globals tests/api/environment/workspace.postman_globals.json \
+          --reporters htmlextra \
+          --reporter-htmlextra-export results/vets-report.html
+
+      - name: Run Visits Collection using Globals
+        run: |
+          newman run tests/api/collections/visitsCollection.postman_collection.json \
+          --environment tests/api/environment/Local.postman_environment.json \
+          --globals tests/api/environment/workspace.postman_globals.json \
+          --reporters htmlextra \
+          --reporter-htmlextra-export results/visits-report.html
+
+      - name: Upload HTML Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-api-test-reports
+          path: results/
