@@ -1,0 +1,21 @@
+{
+    "OwnerTestData": {
+        "firstName": "Hannah",
+        "lastName": "George",
+        "address": "Pruimenstraat 10",
+        "city": "Amsterdam",
+        "telephone": "0627561794"
+    },
+    "PetTestData": {
+        "ownerName": "Franklin",
+        "name": "Tomtom",
+        "birthdate": "19/01/2021",
+        "type": "lizard"
+    },
+    "VisitsTestData" : {
+        "ownerName": "Franklin",
+        "petName": "Leo",
+        "date": "22-08-2024",
+        "description": "rabis shot"
+    }
+}
