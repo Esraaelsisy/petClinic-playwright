@@ -1,0 +1,117 @@
+{
+	"id": "4956d853-8535-4ad2-8a3e-0b8350d061b6",
+	"values": [
+		{
+			"key": "ownerId",
+			"value": "1",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "firstName",
+			"value": "George",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "lastName",
+			"value": "Franklin",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "address",
+			"value": "De pijp",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "city",
+			"value": "Amsterdam",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "telephone",
+			"value": "0627561494",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "petName",
+			"value": "Leo",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "petBirthDate",
+			"value": "2010-09-07",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "petTypeId",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "visitDate",
+			"value": "2010-09-07",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "visitDescription",
+			"value": "rabis shot",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "petId",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "vetId",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ownerId",
+			"value": "1",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "notFoundOwnerId",
+			"value": "500",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "notFoundPetId",
+			"value": "500",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalidOwnerId",
+			"value": "invalid",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalidPetId",
+			"value": "invalid",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2024-09-17T21:52:27.173Z",
+	"_postman_exported_using": "Postman/11.12.0"
+}
