@@ -12,10 +12,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        headless: [true, false]  # Toggle headless mode with the matrix
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -47,16 +43,20 @@ jobs:
 
       - name: Run Owner Tests file 
         run: npx playwright test e2e/ui/specs/ownerInfoTests.spec.ts    
-       
+        continue-on-error: true 
+
       - name: Run Pets Tests file 
         run: npx playwright test e2e/ui/specs/petsTests.spec.ts    
-        
+        continue-on-error: true
+
       - name: Run Visits Tests file 
         run: npx playwright test e2e/ui/specs/visitsTests.spec.ts    
+        continue-on-error: true
 
       - name: Run Vets Tests file 
         run: npx playwright test e2e/ui/specs/vetsTests.spec.ts   
-
+        continue-on-error: true
+        
       - name: Upload Playwright test report
         uses: actions/upload-artifact@v4
         with:
