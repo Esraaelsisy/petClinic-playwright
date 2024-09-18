@@ -1,5 +1,28 @@
 # Pet Clinic Testing Repo
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+  - [Playwright UI Tests](#playwright-ui-tests)
+  - [Postman API Tests](#postman-api-tests)
+- [Running the Tests](#running-the-tests)
+  - [Running UI Tests (Playwright)](#running-ui-tests-playwright)
+  - [Toggling Headless/Headed Mode](#toggling-headlessheaded-mode)
+  - [Running API Tests (Postman)](#running-api-tests-postman)
+- [Architectural Decisions](#architectural-decisions)
+  - [Page Object Model (POM)](#page-object-model-pom)
+  - [User Interface Locators](#user-interface-locators)
+  - [Data-Driven Testing](#data-driven-testing)
+- [Continuous Integration Setup](#continuous-integration-setup)
+  - [Playwright CI with Docker](#playwright-ci-with-docker)
+  - [Postman API Tests CI](#postman-api-tests-ci)
+- [Expected Failures in Postman Collections](#expected-failures-in-postman-collections)
+  - [Tests To Be Failing](#tests-to-be-failing)
+- [Manual Testing Documents](#manual-testing-documents)
+
 ## Overview
 
 This repository contains both UI and API test automation for a web application. The UI tests are written in **Playwright with TypeScript**, and the API tests are handled via **Postman collections** with JavaScript test scripts.
@@ -92,8 +115,6 @@ You can run the API tests in Postman by importing the collections and environmen
 newman run tests/api/collections/ownersCollection.postman_collection.json -e tests/api/environment/Local.postman_environment.json
 ```
 
----
-
 ## Architectural Decisions
 
 ### Page Object Model (POM)
@@ -107,8 +128,6 @@ To ensure the functionality and usability of the application, user interface loc
 ### Data-Driven Testing
 
 Testing with external data files enables the automation scripts to fetch test inputs from structured files, making the tests adaptable and more comprehensive. This practice reduces hardcoding of values in tests and allows quick updates to data scenarios without altering the test scripts, improving flexibility and efficiency.
-
----
 
 ## Continuous Integration Setup
 
@@ -132,8 +151,6 @@ In the Postman API tests CI pipeline:
 3. The API test results are saved as detailed HTML reports.
 4. The reports are stored in the `results/` folder and uploaded as artifacts.
 
----
-
 ## Expected Failures in Postman Collections
 
 Some Postman tests may fail, especially those with titles containing `[BUG]`. These tests are related to known issues in the application, and the failures are expected due to unresolved bugs. It’s important to review the test reports for these failures and cross-check them with the application's issue tracker to ensure that they are indeed related to the known bugs.
@@ -141,40 +158,44 @@ Some Postman tests may fail, especially those with titles containing `[BUG]`. Th
 - **Test Cases with [BUG]**: These are placeholders for known issues that should be addressed during future development cycles.
 - **Action**: These failures should be expected, and no further action is needed unless the related bugs are fixed and the tests still fail.
 
-### Tests To Be Failing 
+### Tests To Be Failing
 
 1. **POST /owners**:
    - **Issue**: The API does not return the expected response body upon successful creation.
-   
 2. **GET /owners/{ownerId}**:
+
    - **Issue**: The API does not return the correct response status code or response body when the owner is not found (`NOT_FOUND`).
 
 3. **PUT /owners/{ownerId}**:
+
    - **Issue**: The API does not return the correct response status code or response body when the owner is not found (`NOT_FOUND`).
 
 4. **DELETE /owners/{ownerId}**:
+
    - **Issue**: The DELETE endpoint is not implemented, even though the assignment instructions indicate that it should be.
 
 5. **POST /owners/{ownerId}/pets**:
+
    - **Issue**: The documentation contains an incorrect payload.
    - **Issue**: The API does not return the expected response status code or body when sending the correct payload.
    - **Issue**: The API does not return the expected response status code or body when the owner is not found (`NOT_FOUND`).
 
 6. **PUT /owners/{ownerId}/pets/{petId}**:
+
    - **Issue**: The documentation contains an incorrect payload.
    - **Issue**: The API does not return the expected response status code or body when the owner or pet is not found (`NOT_FOUND`).
 
 7. **GET /vets/{vetId}**:
+
    - **Issue**: The API does not return the expected response status code or body upon a successful request.
 
 8. **POST /owners/{ownerId}/pets/{petId}/visits**:
+
    - **Issue**: The API does not return the correct response status code or body when the visit description is missing (`BAD_REQUEST`).
    - **Issue**: The API does not return the correct response status code or body when the pet is not found (`NOT_FOUND`).
 
 9. **GET /owners/{ownerId}/pets/{petId}/visits**:
    - **Issue**: The API does not return the correct response status code or body when the pet is not found (`NOT_FOUND`).
-
----
 
 ## Manual Testing Documents
 
