@@ -1,16 +1,25 @@
 {
     "OwnerTestData": {
+        "firstName": "George",
+        "lastName": "Franklin",
+        "address": "110 W. Liberty St.",
+        "city": "Madison",
+        "telephone": "6085551023",
+        "new_firstName": "Tom",
+        "new_lastName": "Carlos"
+    },
+    "NewOwnerTestData": {
         "firstName": "Hannah",
-        "lastName": "George",
+        "lastName": "Smith",
         "address": "Pruimenstraat 10",
         "city": "Amsterdam",
         "telephone": "0627561794"
     },
     "PetTestData": {
         "ownerName": "Franklin",
-        "name": "Tomtom",
+        "name": "Leo",
         "birthdate": "19/01/2021",
-        "type": "lizard"
+        "type": "dog"
     },
     "VisitsTestData" : {
         "ownerName": "Franklin",

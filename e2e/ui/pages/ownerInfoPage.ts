@@ -33,19 +33,37 @@ export class OwnerInfoPage{
     }
     
 
-    async updateOwnerfield(field:string, value: string){
-        if(field == "First Name") await this.firstNameInput.fill(value)
-        else if(field == "Last Name") await this.lastNameInput.fill(value)
-        else if(field == "Address") await this.addressInput.fill(value)
-        else if(field == "City") await this.cityInput.fill(value)
-        else if(field == "Telephone")await this.telephoneInput.fill(value)
-        await this.submitButton.click()
-    }
+    async updateOwnerfield(field: string, value: string, oldvalue: string) {
+    
+        let inputElement;
+        // Determine the input element based on the field name
+        switch (field) {
+            case "First Name":
+                inputElement = this.firstNameInput;
+                break
+            case "Last Name":
+                inputElement = this.lastNameInput;
+                break
+            case "Address":
+                inputElement = this.addressInput;
+                break
+            case "City":
+                inputElement = this.cityInput;
+                break
+            case "Telephone":
+                inputElement = this.telephoneInput
+                break
+            default:
+                throw new Error('Unknown field: '+field)
+        }
+        // Wait for the entire page to be fully loaded
+        await this.page.waitForTimeout(5000); 
 
-    async updateOwnerFirstName(firstName: string){
-        await this.firstNameInput.clear()
-        await this.firstNameInput.fill(firstName)
-        await this.submitButton.click()
+        // Clear the field and fill with the new value
+        await inputElement.fill(value);
+    
+        // Click the submit button
+        await this.submitButton.click();
     }
 
 
