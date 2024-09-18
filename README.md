@@ -58,8 +58,7 @@ Additionally, the repository includes manual testing documents for further testi
 ├── tests/
 │   ├── api/
 │   │   ├── collections/                 # Postman collections
-│   │   ├── data/                        # API test data
-│   │   ├── environment/                 # Postman environments
+│   │   ├── environment/                 # Postman environments and variables
 ├── .gitignore
 ├── docker-compose.yml
 ├── playwright.config.ts                 # Playwright configuration
@@ -112,7 +111,9 @@ You can control whether the tests run in headless or headed mode by setting the 
 You can run the API tests in Postman by importing the collections and environment files from `tests/api/collections/` and `tests/api/environment/`. Alternatively, run them via Newman using the following command:
 
 ```bash
-newman run tests/api/collections/ownersCollection.postman_collection.json -e tests/api/environment/Local.postman_environment.json
+newman run tests/api/collections/ownersCollection.postman_collection.json \
+          --environment tests/api/environment/Local.postman_environment.json \
+          --globals tests/api/environment/workspace.postman_globals.json
 ```
 
 ## Architectural Decisions
@@ -129,7 +130,7 @@ To ensure the functionality and usability of the application, user interface loc
 
 Testing with external data files enables the automation scripts to fetch test inputs from structured files, making the tests adaptable and more comprehensive. This practice reduces hardcoding of values in tests and allows quick updates to data scenarios without altering the test scripts, improving flexibility and efficiency.
 
-## Continuous Integration Setup
+## Continuous Integration Setup with Github Actions
 
 ### Playwright CI with Docker
 
