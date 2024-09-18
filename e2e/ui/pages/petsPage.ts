@@ -2,7 +2,6 @@ import { Locator, Page, expect } from "@playwright/test"
 import { HeaderPage } from "./headerPage"
 
 export class PetsPage{
-
     readonly page: Page
     readonly header: HeaderPage
     readonly ownerNameLabel : Locator
@@ -25,13 +24,12 @@ export class PetsPage{
         await this.typeList.selectOption(petType)
     }
 
-    async addNewPetDetails(petName: string , petType: string , birthDate: string){
-        await expect(this.ownerNameLabel).toContainText('George')
-        await this.nameInput.fill(petName)
+    async addNewPetDetails(ownerName: string,petName: string , petType: string , birthDate: string){
+        await expect(this.ownerNameLabel).toContainText(ownerName)
         await this.birthDateInput.pressSequentially(birthDate)
+        await this.nameInput.clear()
+        await this.nameInput.fill(petName)
         await this.selectPetTypeFromList(petType)
         await this.submitButton.click()
     }
-    
-
 }

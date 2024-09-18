@@ -2,7 +2,6 @@ import { Locator, Page } from "@playwright/test"
 import { HeaderPage } from "./headerPage"
 
 export class OwnersPage{
-
     readonly page: Page
     readonly header: HeaderPage
     readonly searchTextBox: Locator 
@@ -22,5 +21,4 @@ export class OwnersPage{
         await this.searchForAnOwner(searchWord)
         await this.page.locator('a:has-text("'+searchWord+'")').first().click()
     }
-
 }

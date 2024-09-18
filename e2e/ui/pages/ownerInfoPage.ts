@@ -2,7 +2,6 @@ import { Locator, Page , expect } from "@playwright/test"
 import { HeaderPage } from "./headerPage"
 
 export class OwnerInfoPage{
-
     readonly page: Page
     readonly header: HeaderPage
     readonly firstNameInput: Locator
@@ -64,10 +63,5 @@ export class OwnerInfoPage{
     
         // Click the submit button
         await this.submitButton.click();
-    }
-
-
-
-
-   
+    }   
 }

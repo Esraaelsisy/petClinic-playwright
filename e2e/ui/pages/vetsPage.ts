@@ -2,7 +2,6 @@ import { Page } from "@playwright/test"
 import { HeaderPage } from "./headerPage"
 
 export class VetsPage{
-
     readonly page: Page
     readonly header: HeaderPage
     

@@ -2,7 +2,6 @@ import { Locator, Page } from "@playwright/test"
 import { HeaderPage } from "./headerPage"
 
 export class VisitsPage{
-
     readonly page: Page
     readonly header: HeaderPage
     readonly descriptionInput: Locator
@@ -18,6 +17,5 @@ export class VisitsPage{
     async addNewVisitDetails(description: string){
         await this.descriptionInput.fill(description)
         await this.addNewVisitButton.click()
-
     }
 }
