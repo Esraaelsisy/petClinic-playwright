@@ -24,7 +24,7 @@ Additionally, the repository includes manual testing documents for further testi
 │   │   │   └── my-hooks.ts              # Playwright hooks
 │   │   ├── pages/
 │   │   │   ├── headerPage.ts            # Header Page Object
-│   │   │   ├── homePage.ts              # Home Page Object
+│   │   │   ├── pageManager.ts           # Page Manager Objects for all pages
 │   │   │   └── ownerInfoPage.ts         # Other Page Objects...
 │   │   ├── specs/
 │   │   │   ├── ownerInfoTests.spec.ts   # UI test cases
@@ -87,6 +87,20 @@ newman run tests/api/collections/ownersCollection.postman_collection.json -e tes
 ```
 
 ---
+## Architectural Decisions
+
+### Page Object Model (POM)
+The **Page Object Model (POM)** is applied as a design pattern in the UI tests to enhance maintainability and reusability. By creating separate classes for each page or component, the interaction logic with the UI is abstracted away from the test cases. Additionally, handling all the page instances in a **Page Manager** file centralizes the page object management, improving scalability. This ensures that changes to the UI can be managed in one location without impacting multiple tests, allowing for easier maintenance and more organized test code. The pattern also promotes cleaner and more readable test scripts by keeping the test logic separate from the page structure.
+
+
+### User Interface Locators
+To ensure the functionality and usability of the application, user interface locators are used to interact with and validate the various elements on the web pages. These locators are well-defined within the Page Object classes, ensuring a clear separation of concerns between test logic and UI interactions.
+
+### Data-Driven Testing
+Testing with external data files enables the automation scripts to fetch test inputs from structured files, making the tests adaptable and more comprehensive. This practice reduces hardcoding of values in tests and allows quick updates to data scenarios without altering the test scripts, improving flexibility and efficiency.
+
+---
+
 
 ## Continuous Integration Setup
 
@@ -96,7 +110,7 @@ In the Playwright CI pipeline:
 
 1. The application is first started using Docker Compose.
 2. The pipeline then waits for the app to be fully up and running.
-3. It runs Playwright tests in both headless and headed modes using the matrix strategy.
+3. It runs Playwright tests for every .spec.ts file.
 4. Results from the Playwright test runs are saved as HTML reports and uploaded as artifacts.
 
 These reports can be found in the `playwright-report` folder after the tests run.
