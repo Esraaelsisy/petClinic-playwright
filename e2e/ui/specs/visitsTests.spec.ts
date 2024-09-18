@@ -13,7 +13,7 @@ test.describe('Add Pet Visits Tests', async () => {
 
     await test.step('Select an owner from the list', async () => {
       // Select the owner from the list using a hardcoded name ('George' in this case)
-      await pm.onOwnersPage().selectAnOwnerFromListWithCriteria('George')
+      await pm.onOwnersPage().selectAnOwnerFromListWithCriteria(VisitsTestData.ownerName)
     })
 
     await test.step('Navigate to the Visits page', async () => {
@@ -31,7 +31,7 @@ test.describe('Add Pet Visits Tests', async () => {
       await pm.onOwnerOverviewPage().gotoVisitsPage()
 
       // Add the appropriate expectation here to validate the visit details
-      // await expect(pm.onVisitsPage().validateVisitDetails('new visit for today'))
+      await expect(pm.onVisitsPage().validateVisitDetailsRow(VisitsTestData.description , VisitsTestData.date))
     })
   })
 })
