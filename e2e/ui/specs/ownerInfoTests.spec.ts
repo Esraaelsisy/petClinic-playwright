@@ -128,3 +128,28 @@ test.describe('Edit Owners Tests', async () => {
     })
   })
 })
+
+// Describes the test suite for viewing owner details
+test.describe('View Owners Tests', async () => {
+
+  // Test to edit the first name of an existing owner
+  test('view Owner Details', async ({ page, ownersFixture }) => {
+    const pm = new PageManager(page)
+
+    await test.step('Select the owner by first name', async () => {
+      // Select the owner based on the current first name from OwnerTestData
+      await pm.onOwnersPage().selectAnOwnerFromListWithCriteria(OwnerTestData.firstName)
+    })
+
+    await test.step('Validate owner details after registration', async () => {
+      // Validate that the owner details match the data entered
+      await pm.onOwnerOverviewPage().validateOwnerDetails(
+        OwnerTestData.firstName,
+        OwnerTestData.lastName,
+        OwnerTestData.address,
+        OwnerTestData.city,
+        OwnerTestData.telephone
+      )
+    })   
+  })
+})
