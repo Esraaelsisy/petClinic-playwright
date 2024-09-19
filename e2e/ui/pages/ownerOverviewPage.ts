@@ -10,7 +10,7 @@ export class OwnerOverviewPage{
     readonly ownerTelephoneText: Locator
     readonly editOwnerButton: Locator
     readonly addNewPetButton: Locator
-    readonly petdetailsRaw: Locator
+    readonly petdetailsRow: Locator
     readonly petNameLabel: Locator
     readonly petBirthDateLabel: Locator
     readonly petTypeLabel: Locator
@@ -26,11 +26,11 @@ export class OwnerOverviewPage{
         this.ownerTelephoneText = page.getByRole('row').filter({hasText: "Telephone"}).locator('td')
         this.editOwnerButton = page.getByRole('link').filter({hasText:"Edit Owner"})
         this.addNewPetButton = page.getByRole('link').filter({hasText: "Add New Pet"})
-        this.petdetailsRaw = page.locator('tr.ng-scope').first()
-        this.petNameLabel = this.petdetailsRaw.getByRole('link').first()
-        this.petBirthDateLabel = this.petdetailsRaw.locator('dd').nth(1)
-        this.petTypeLabel = this.petdetailsRaw.locator('dd').nth(2)
-        this.editPetLink = this.petdetailsRaw.locator('a').nth(1)
+        this.petdetailsRow =  page.locator('table.table.table-striped').nth(1).locator('tr').first()
+        this.petNameLabel= this.petdetailsRow.getByRole('link').first()
+        this.petBirthDateLabel = this.petdetailsRow.locator('dd').nth(1)
+        this.petTypeLabel = this.petdetailsRow.locator('dd').nth(2)
+        this.editPetLink = this.petdetailsRow.locator('a').nth(1)
     }
 
     async gotoOwnerInfoPage()
@@ -59,13 +59,5 @@ export class OwnerOverviewPage{
         await expect(this.ownerAddressText).toContainText(address)
         await expect(this.ownerCityText).toContainText(city)
         await expect(this.ownerTelephoneText).toContainText(telephone)
-    }
-
-    async validatePetDetailsRow(ownerName: string, petName: string , type: string ){
-        await expect(this.ownerNameText).toContainText(ownerName)
-        await expect(this.petNameLabel).toContainText(petName)
-        await expect(this.petTypeLabel).toContainText(type)
-        // Not checking the birthdate because it has a current issue to be saved wrongly
-       // await expect(this.petBirthDateLabel).toContainText(birthdate)
     }
 }

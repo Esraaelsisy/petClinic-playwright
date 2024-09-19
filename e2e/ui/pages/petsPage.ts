@@ -32,4 +32,12 @@ export class PetsPage{
         await this.selectPetTypeFromList(petType)
         await this.submitButton.click()
     }
+
+    async validatePetDetailsRow(ownerName: string, petName: string , type: string ){
+        await expect(this.ownerNameLabel).toContainText(ownerName)
+        await expect(this.typeList).toContainText(type)
+        await expect(this.nameInput).toContainText(petName)
+         // Not checking the birthdate because it has a current issue to be saved wrongly
+        // await expect(this.petBirthDateLabel).toContainText(birthdate)
+     }
 }
