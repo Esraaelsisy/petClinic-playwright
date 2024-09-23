@@ -33,7 +33,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install Newman and HTML Reporter
         run: |
@@ -49,7 +49,6 @@ jobs:
           --reporter-html-export results/owners-report.html
         continue-on-error: true
 
-
       - name: Run Pets Collection using Globals
         run: |
           newman run tests/api/collections/petsCollection.postman_collection.json \
@@ -58,16 +57,16 @@ jobs:
           --reporters cli,html \
           --reporter-html-export results/pets-report.html
         continue-on-error: true
-    
+
       - name: Run Vets Collection using Globals
         run: |
           newman run tests/api/collections/vetsCollection.postman_collection.json \
           --environment tests/api/environment/Local.postman_environment.json \
           --globals tests/api/environment/workspace.postman_globals.json \
-          ---reporters cli,html \
+          --reporters cli,html \
           --reporter-html-export results/vets-report.html
         continue-on-error: true
-    
+
       - name: Run Visits Collection using Globals
         run: |
           newman run tests/api/collections/visitsCollection.postman_collection.json \
@@ -76,9 +75,9 @@ jobs:
           --reporters cli,html \
           --reporter-html-export results/visits-report.html
         continue-on-error: true
-    
+
       - name: Upload HTML Reports
         uses: actions/upload-artifact@v4
         with:
-          name: postman-api-test-reports
-          path: results/
+          name: postman-report
+          path: postman-report/
