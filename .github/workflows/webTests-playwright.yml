@@ -41,18 +41,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Owner Tests file
-        run: npx playwright test e2e/ui/specs/ownerInfoTests.spec.ts
+      - name: Run UI Specs
+        run: npm run test:ui
         continue-on-error: true
-
-      - name: Run Pets Tests file
-        run: npx playwright test e2e/ui/specs/petsTests.spec.ts
-        continue-on-error: true
-
-      - name: Run Visits Tests file
-        run: npx playwright test e2e/ui/specs/visitsTests.spec.ts
-        continue-on-error: true
-
 
       - name: Upload Playwright test report
         uses: actions/upload-artifact@v4

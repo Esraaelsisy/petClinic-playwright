@@ -41,12 +41,8 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Owner API Tests files
-        run: npx playwright test e2e/api/tests/owners
-        continue-on-error: true
-
-      - name: Run Pets API Tests files
-        run: npx playwright test e2e/api/tests/pets
+      - name: Run APIs Tests
+        run: npm run test:api
         continue-on-error: true
 
       - name: Upload Playwright test report
