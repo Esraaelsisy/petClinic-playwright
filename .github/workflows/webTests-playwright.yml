@@ -57,5 +57,5 @@ jobs:
       - name: Upload Playwright test report
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-ui-report
-          path: playwrighReports/playwright-api-report/
+          name: playwright-report
+          path: playwright-report/
