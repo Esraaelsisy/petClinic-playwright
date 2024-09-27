@@ -115,7 +115,7 @@ npm install
 - **To run the Playwright UI tests,** use the following command:
 
 ```bash
-npm run test:ui
+npm run test:ui-chromium
 ```
 
 - **To run Owners UI tests only:**
@@ -171,13 +171,13 @@ You can control whether the tests run in headless or headed mode by setting the 
 - To run in **headed mode** (with UI visible):
 
 ```bash
-HEADLESS=false npm run test:ui
+HEADLESS=false npm run test:ui-chromium
 ```
 
 - To run in **headless mode** (default):
 
 ```bash
-npm run test:ui
+npm run test:ui-chromium
 ```
 
 ## Architectural Decisions
