@@ -22,6 +22,7 @@
 - [Expected Failures in API Tests](#expected-failures-in-api-tests)
   - [Tests To Be Failing](#tests-to-be-failing)
 - [Manual Testing Documents](#manual-testing-documents)
+- [Deliverables](#deliverables)
 
 ## Overview
 
@@ -102,33 +103,65 @@ Additionally, the repository includes manual testing documents for further evalu
 
 - **Node.js** installed
 - Install dependencies:
-  ```bash
-  npm install
-  ```
 
-### Postman API Tests:
-
-- **Postman** or **Newman** installed
-- Import the Postman collections and environment from the `tests/api` folder.
+```bash
+npm install
+```
 
 ## Running the Tests
 
 ### Running UI Tests (Playwright)
 
-To run the Playwright UI tests, use the following command:
+- **To run the Playwright UI tests,** use the following command:
 
 ```bash
-npx playwright test
+npm run test:ui
+```
+
+- **To run Owners UI tests only:**
+
+```bash
+npm run test:owners-ui
+```
+
+- **To run Pets UI tests only:**
+
+```bash
+npm run test:pets-ui
+```
+
+- **To run Visits UI tests only:**
+
+```bash
+npm run test:visits-ui
 ```
 
 - **Test results and HTML reports** are generated automatically.
 
 ### Running API Tests (Playwright)
 
-To run the Playwright API tests, use the following command:
+- **To run the Playwright API tests,** use the following command:
 
 ```bash
-npx playwright test --project=api
+npm run test:api
+```
+
+- **To run Owners API tests only:**
+
+```bash
+npm run test:owners-api
+```
+
+- **To run Pets API tests only:**
+
+```bash
+npm run test:pets-api
+```
+
+- **To run all tests (UI and API):**
+
+```bash
+npm run test:all
 ```
 
 ### Toggling Headless/Headed Mode
@@ -136,13 +169,16 @@ npx playwright test --project=api
 You can control whether the tests run in headless or headed mode by setting the `HEADLESS` environment variable.
 
 - To run in **headed mode** (with UI visible):
-  ```bash
-  HEADLESS=false npx playwright test
-  ```
-  - To run in **headless mode** (default):
-  ```bash
-  npx playwright test
-  ```
+
+```bash
+HEADLESS=false npm run test:ui
+```
+
+- To run in **headless mode** (default):
+
+```bash
+npm run test:ui
+```
 
 ## Architectural Decisions
 
@@ -240,3 +276,72 @@ The following manual testing documents have been added to the repository under t
    - File: `Overall_Evaluation_Report.xlsx`
 
 You can find these files in the `manual-testing-documents/` folder for reference during manual testing.
+
+## Deliverables
+
+This project includes the following key deliverables for the assignment:
+
+1. **Manual Test Cases Document:**
+
+   - A comprehensive set of manual test cases is provided, covering two critical functionalities of the application:
+     - Adding a new pet.
+     - Adding a new pet visit.
+
+2. **Overall Evaluation Report:**
+
+   - The evaluation report details the issues discovered during testing, the reasoning behind the chosen test cases, and insights into the overall testing approach.
+   - The report includes:
+     - Found Issues in APIs and UI.
+     - A summary of test cases selected for automation.
+     - Recommendations for improvement.
+     - Risks identified during testing.
+     - Approach identifying testing methodology, including manual and automated testing strategies.
+     - Business improvement suggestions (noted under the "Business Improvements" tab).
+
+3. **Automated Tests:**
+
+   - **API Automation Tests:**
+   - Developed using Playwright with TypeScript for API testing.
+   - Tests cover Owner and Pet API endpoints with positive, negative, and edge case scenarios.
+   - Uses JSON schemas for response validation.
+   - Uses JSON data file to drive the tests.
+   - Includes `@bug` tags for tests associated with known application issues.
+   - **UI Tests:**
+     - 8 automated web test scripts developed using Playwright, covering various functionalities:
+       - `ownersTests.spec.ts`: 5 completed tests.
+       - `petsTests.spec.ts`: 2 tests, some may fail.
+       - `visitsTests.spec.ts`: 1 test, with potential failures.
+       - A placeholder for `vetsTests.spec.ts` is included to showcase the framework structure.
+     - The extra incomplete tests are added to demonstrate the testing approach.
+
+4. **Test Reports:**
+
+   - An automatic test report is generated after each test run, which includes detailed execution results.
+   - Instructions on how to access and interpret these reports are provided in the README file.
+
+5. **README:**
+
+   - The README includes clear and concise instructions on:
+     - How to run both the API and UI tests.
+     - How to access and review the generated test reports.
+     - Detailed explanations for using the codebase without needing prior knowledge of TypeScript or JavaScript.
+     - Instructions for toggling headless execution for front-end tests.
+
+6. **Continuous Integration (CI) Setup:**
+
+   - **GitHub Actions** pipelines are configured for both API and UI tests:
+     - `apiTests-postman.yml`: Executes the Postman API tests (now updated to Playwright API tests).
+     - `webTests-playwright.yml`: Executes the Playwright UI tests.
+   - These pipelines handle the test execution and report generation automatically upon code changes.
+   - Instructions for running tests via CI/CD are included in the README file.
+
+7. **Docker Integration:**
+
+   - Docker Compose is used to manage the application environment.
+   - CI pipelines ensure the application is ready before running the tests.
+
+8. **Additional Details:**
+   - Expected failing tests are explicitly mentioned in both the **Evaluation Report** and the **README** file.
+   - A toggle for headless execution of UI tests is provided, with usage instructions included in the README.
+   - Suggestions for future improvements and potential business benefits are provided in the evaluation report.
+   - Extra tests beyond the mandatory ones have been included to showcase the automation testing approach.
