@@ -7,27 +7,27 @@
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
   - [Playwright UI Tests](#playwright-ui-tests)
-  - [Postman API Tests](#postman-api-tests)
+  - [Playwright API Tests](#playwright-api-tests)
 - [Running the Tests](#running-the-tests)
   - [Running UI Tests (Playwright)](#running-ui-tests-playwright)
-  - [Toggling Headless/Headed Mode](#toggling-headlessheaded-mode)
-  - [Running API Tests (Postman)](#running-api-tests-postman)
+  - [Running API Tests (Playwright)](#running-api-tests-playwright)
+  - [Toggling Headless/Headed Mode For UI Tests](#toggling-headlessheaded-mode)
 - [Architectural Decisions](#architectural-decisions)
   - [Page Object Model (POM)](#page-object-model-pom)
   - [User Interface Locators](#user-interface-locators)
   - [Data-Driven Testing](#data-driven-testing)
 - [Continuous Integration Setup](#continuous-integration-setup)
-  - [Playwright CI with Docker](#playwright-ci-with-docker)
-  - [Postman API Tests CI](#postman-api-tests-ci)
-- [Expected Failures in Postman Collections](#expected-failures-in-postman-collections)
+  - [Playwright API Tests CI](#playwright-api-tests-ci)
+  - [Playwright UI Tests CI](#playwright-ui-tests-ci)
+- [Expected Failures in API Tests](#expected-failures-in-api-tests)
   - [Tests To Be Failing](#tests-to-be-failing)
 - [Manual Testing Documents](#manual-testing-documents)
 
 ## Overview
 
-This repository contains both UI and API test automation for a web application. The UI tests are written in **Playwright with TypeScript**, and the API tests are handled via **Postman collections** with JavaScript test scripts.
+This repository contains both UI and API test automation for a web application. The tests are written in **Playwright with TypeScript**, using data-driven approaches and JSON schemas for validation.
 
-Additionally, the repository includes manual testing documents for further testing and evaluation:
+Additionally, the repository includes manual testing documents for further evaluation:
 
 - **Manual Test Cases for 2 Functionalities**
 - **Overall Evaluation Report**
@@ -35,7 +35,7 @@ Additionally, the repository includes manual testing documents for further testi
 ### **Technologies Used:**
 
 - **UI Tests:** Playwright, TypeScript
-- **API Tests:** Postman, JavaScript
+- **API Tests:** Playwright, TypeScript
 - **Additional Tools:** Docker, Node.js
 
 ## Project Structure
@@ -49,21 +49,51 @@ Additionally, the repository includes manual testing documents for further testi
 │   │   │   └── my-hooks.ts              # Playwright hooks Fixture
 │   │   ├── pages/
 │   │   │   ├── headerPage.ts            # Header Page Object
-│   │   │   ├── pageManager.ts           # Page Manager Objects for all pages
-│   │   │   └── ownerInfoPage.ts         # Other Page Objects...
+│   │   │   ├── homePage.ts              # Home Page Object
+│   │   │   ├── ownerOverviewPage.ts     # Owner Overview Page Object
+│   │   │   ├── ownersPage.ts            # Owners Page Object
+│   │   │   ├── ownerInfoPage.ts         # Owner Info Page Object
+│   │   │   ├── petsPage.ts              # Pets Page Object
+│   │   │   ├── vetsPage.ts              # Vets Page Object
+│   │   │   ├── visitsPage.ts            # Visits Page Object
+│   │   │   └── pageManager.ts           # Page Manager for handling all Page Objects
 │   │   ├── specs/
 │   │   │   ├── ownerInfoTests.spec.ts   # UI test cases
 │   │   │   ├── petsTests.spec.ts
-│   │   │   └── vetsTests.spec.ts
-├── tests/
+│   │   │   ├── vetsTests.spec.ts
+│   │   │   └── visitsTests.spec.ts
+│
 │   ├── api/
-│   │   ├── collections/                 # Postman collections
-│   │   ├── environment/                 # Postman environments and variables
+│   │   ├── data/
+│   │   │   ├── ownerData.json           # Owner-related API test data
+│   │   │   └── petData.json             # Pet-related API test data
+│   │   ├── fixtures/
+│   │   │   ├── schemaSetup.ts           # JSON Schema setup for API tests
+│   │   │   └── testSetup.ts             # API test setup
+│   │   ├── schemas/
+│   │   │   ├── ownerSchema.ts           # Owner API response schema
+│   │   │   ├── petSchema.ts             # Pet API response schema
+│   │   │   └── restErrorSchema.ts       # Error response schema
+│   │   ├── tests/
+│   │   │   ├── owners/
+│   │   │   │   ├── GET_owners.test.ts   # Get Owner API test cases
+│   │   │   │   ├── POST_owners.test.ts  # Create Owner API test cases
+│   │   │   │   └── PUT_owners.test.ts   # Edit Owner API test cases
+│   │   │   ├── pets/
+│   │   │   │   ├── GET_pets.test.ts     # Get Pet API test cases
+│   │   │   │   ├── POST_pets.test.ts    # Create Pet API test cases
+│   │   │   │   └── PUT_pets.test.ts     # Edit Pet API test cases
+│   │   │   └── utils/
+│   │   │       ├── endpoints.ts         # API Endpoints definitions
+│   │   │       ├── requestUtils.ts      # Utility functions for API requests
+│   │   │       ├── responseUtils.ts     # Utility functions for API responses
+│   │   │       └── schemaValidator.ts   # JSON Schema validator utility
+│
 ├── .gitignore
 ├── docker-compose.yml
 ├── playwright.config.ts                 # Playwright configuration
 ├── package.json                         # Project dependencies
-└── README.md
+├── README.md
 ```
 
 ## Prerequisites
@@ -93,6 +123,14 @@ npx playwright test
 
 - **Test results and HTML reports** are generated automatically.
 
+### Running API Tests (Playwright)
+
+To run the Playwright API tests, use the following command:
+
+```bash
+npx playwright test --project=api
+```
+
 ### Toggling Headless/Headed Mode
 
 You can control whether the tests run in headless or headed mode by setting the `HEADLESS` environment variable.
@@ -105,16 +143,6 @@ You can control whether the tests run in headless or headed mode by setting the 
   ```bash
   npx playwright test
   ```
-
-### Running API Tests (Postman)
-
-You can run the API tests in Postman by importing the collections and environment files from `tests/api/collections/` and `tests/api/environment/`. Alternatively, run them via Newman using the following command:
-
-```bash
-newman run tests/api/collections/ownersCollection.postman_collection.json \
-          --environment tests/api/environment/Local.postman_environment.json \
-          --globals tests/api/environment/workspace.postman_globals.json
-```
 
 ## Architectural Decisions
 
@@ -132,31 +160,33 @@ Testing with external data files enables the automation scripts to fetch test in
 
 ## Continuous Integration Setup with Github Actions
 
-### Playwright CI with Docker
+### Playwright API Tests CI
 
-In the Playwright CI pipeline:
-
-1. The application is first started using Docker Compose.
-2. The pipeline then waits for the app to be fully up and running.
-3. It runs Playwright tests for every .spec.ts file.
-4. Results from the Playwright test runs are saved as HTML reports and uploaded as artifacts.
-
-These reports can be found in the `playwright-report` folder after the tests run.
-
-### Postman API Tests CI
-
-In the Postman API tests CI pipeline:
+In the Playwright API tests CI pipeline:
 
 1. The application is started using Docker Compose.
-2. Newman is used to run the Postman collections, using both environment and global variables.
-3. The API test results are saved as detailed HTML reports.
-4. The reports are stored in the `results/` folder and uploaded as artifacts.
+2. The pipeline waits for the app to be fully up and running.
+3. It runs API test suites for the **Owners** and **Pets** endpoints.
+4. Playwright generates and uploads the test reports as artifacts.
 
-## Expected Failures in Postman Collections
+This setup ensures that API tests are triggered on every push or pull request to the `main` branch, verifying the functionality of the API endpoints automatically.
 
-Some Postman tests may fail, especially those with titles containing `[BUG]`. These tests are related to known issues in the application, and the failures are expected due to unresolved bugs. It’s important to review the test reports for these failures and cross-check them with the application's issue tracker to ensure that they are indeed related to the known bugs.
+### Playwright UI Tests CI
 
-- **Test Cases with [BUG]**: These are placeholders for known issues that should be addressed during future development cycles.
+In the Playwright UI tests CI pipeline:
+
+1. The application is started using Docker Compose.
+2. The pipeline waits for the app to be fully up and running.
+3. It runs UI test suites, including tests for **Owners**, **Pets** and **Visits**.
+4. Playwright generates and uploads the test reports as artifacts.
+
+Similar to the API tests, the UI tests are automatically executed on every push or pull request to the `main` branch, ensuring the application's UI behaves as expected across different test cases.
+
+## Expected Failures in API Tests
+
+Some Playwright API tests may fail, especially those with titles containing `@bug`. These tests are related to known issues in the application, and the failures are expected due to unresolved bugs. It’s important to review the test reports for these failures and cross-check them with the application's issue tracker to ensure that they are indeed related to the known bugs.
+
+- **Test Cases with `@bug`**: These are placeholders for known issues that should be addressed during future development cycles.
 - **Action**: These failures should be expected, and no further action is needed unless the related bugs are fixed and the tests still fail.
 
 ### Tests To Be Failing
