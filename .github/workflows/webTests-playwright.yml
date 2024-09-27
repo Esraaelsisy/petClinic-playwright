@@ -58,4 +58,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-ui-report
-          path: playwright-ui-report
+          path: playwrighReports/playwright-api-report/
