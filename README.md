@@ -136,7 +136,7 @@ npm run test:pets-ui
 npm run test:visits-ui
 ```
 
-- **Test results and HTML reports** are generated automatically.
+- **Test results and HTML reports** are generated automatically. Latest version are uploaded under `playwright-reports/`
 
 ### Running API Tests (Playwright)
 
@@ -163,6 +163,7 @@ npm run test:pets-api
 ```bash
 npm run test:all
 ```
+- **Test results and HTML reports** are generated automatically. Latest version are uploaded under `playwright-reports/`
 
 ### Toggling Headless/Headed Mode
 
@@ -318,6 +319,7 @@ This project includes the following key deliverables for the assignment:
 
    - An automatic test report is generated after each test run, which includes detailed execution results.
    - Instructions on how to access and interpret these reports are provided in the README file.
+   - Latest versions from these HTML reports can be found under `playwright-reports/`
 
 5. **README:**
 
