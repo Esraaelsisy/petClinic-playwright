@@ -7,7 +7,7 @@
     "test:api": "npx playwright test --project=api",
     "test:owners-api": "npx playwright test e2e/api/tests/owners",
     "test:pets-api": "npx playwright test e2e/api/tests/pets",
-    "test:ui": "npx playwright test --project=ui",
+    "test:ui-chromium": "npx playwright test --project=ui-chromium",
     "test:owners-ui": "npx playwright test e2e/ui/specs/ownerInfoTests.spec.ts",
     "test:pets-ui": "npx playwright test e2e/ui/specs/petsTests.spec.ts",
     "test:visits-ui": "npx playwright test e2e/ui/specs/visitsTests.spec.ts",
