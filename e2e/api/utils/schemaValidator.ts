@@ -2,22 +2,21 @@ import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 
 export class SchemaValidator {
-    private static ajv = new Ajv({ allErrors: true, verbose: true, strict: false });
+  private static ajv: Ajv;
 
-    // Add formats such as "int32", "date", etc.
-    static initializeFormats() {
-        addFormats(this.ajv);
+  static initializeFormats() {
+    // Check if the formats have already been initialized to avoid re-adding
+    if (!this.ajv) {
+      this.ajv = new Ajv();
+      addFormats(this.ajv);  // Add formats only once
     }
+  }
 
-    // Validate response against the provided schema
-    public static validateResponseSchema(data: any, schema: any): boolean {
-        this.initializeFormats(); // Ensure formats are initialized
-        const validate = this.ajv.compile(schema);
-        const valid = validate(data);
-
-        if (!valid) {
-            console.log(validate.errors);
-        }
-        return valid;
-    }
+  static validateResponseSchema(responseBody: any, schema: any): boolean {
+    this.initializeFormats();  // Initialize formats if not done already
+    const validate = this.ajv.compile(schema);
+    const valid = validate(responseBody);
+    if (!valid) console.log(validate.errors);
+    return valid;
+  }
 }
