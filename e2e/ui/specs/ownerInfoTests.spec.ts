@@ -8,7 +8,7 @@ let pm: PageManager
 test.describe('Register Owners Tests', async () => {
 
   // Test to add a new owner with valid data
-  test('Add a new Owner with valid data', async ({ page, registerationFixture }) => {
+  test('Add a new Owner with valid data @happy', async ({ page, registerationFixture }) => {
     const pm = new PageManager(page)
 
     await test.step('Register a new owner with valid data', async () => {
@@ -85,7 +85,7 @@ test.describe('Register Owners Tests', async () => {
 test.describe('Edit Owners Tests', async () => {
 
   // Test to edit the first name of an existing owner
-  test('edit Owner First Name', async ({ page, ownersFixture }) => {
+  test('edit Owner First Name @happy', async ({ page, ownersFixture }) => {
     const pm = new PageManager(page)
 
     await test.step('Select the owner by first name', async () => {
@@ -117,7 +117,7 @@ test.describe('Edit Owners Tests', async () => {
   })
 
   // Test to edit the last name of an existing owner
-  test('edit Owner Last Name', async ({ page, ownersFixture }) => {
+  test('edit Owner Last Name @happy', async ({ page, ownersFixture }) => {
     const pm = new PageManager(page)
 
     await test.step('Select the owner by last name', async () => {
@@ -153,7 +153,7 @@ test.describe('Edit Owners Tests', async () => {
 test.describe('View Owners Tests', async () => {
 
   // Test to edit the first name of an existing owner
-  test('view Owner Details', async ({ page, ownersFixture }) => {
+  test('view Owner Details @happy', async ({ page, ownersFixture }) => {
     const pm = new PageManager(page)
 
     await test.step('Select the owner by first name', async () => {
