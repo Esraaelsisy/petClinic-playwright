@@ -1,0 +1,56 @@
+name: Playwright API Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Install Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose -y
+
+        # Start the application using docker-compose
+      - name: Set up Docker Compose
+        run: docker-compose up -d
+
+      # Wait for the application to be ready
+      - name: Wait for the app to be ready
+        run: sleep 20 # Adjust the time based on your app's startup time
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Owner API Tests files
+        run: npx playwright test e2e/api/tests/owners
+        continue-on-error: true
+
+      - name: Run Pets API Tests files
+        run: npx playwright test e2e/api/tests/pets
+        continue-on-error: true
+
+      - name: Upload Playwright test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-api-report
+          path: playwright-api-report
