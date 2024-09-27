@@ -59,6 +59,26 @@ test.describe('Register Owners Tests', async () => {
       await expect(pm.onOwnerInfoPage().firstNameInput).toHaveAttribute('required', '');
     })
   })
+  // Test to add a new owner without providing the First Name
+  test('Add a new owner without Last Name', async ({ page, registerationFixture }) => {
+    const pm = new PageManager(page)
+
+    await test.step('Attempt to register a new owner without a last name', async () => {
+      // Attempt to register a new owner without the first name
+      await pm.onOwnerInfoPage().registerNewOwner(
+        NewOwnerTestData.firstName,
+        "", // Empty last name to test validation
+        NewOwnerTestData.address,
+        NewOwnerTestData.city,
+        NewOwnerTestData.telephone
+      )
+    })
+
+    // Add a step to validate the error message (if required)
+    await test.step('Validate error message for missing first name', async () => {
+      await expect(pm.onOwnerInfoPage().lastNameInput).toHaveAttribute('required', '');
+    })
+  })
 })
 
 // Describes the test suite for editing owner details
