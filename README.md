@@ -20,7 +20,8 @@
   - [Playwright API Tests CI](#playwright-api-tests-ci)
   - [Playwright UI Tests CI](#playwright-ui-tests-ci)
 - [Expected Failures in API Tests](#expected-failures-in-api-tests)
-  - [Tests To Be Failing](#tests-to-be-failing)
+  - [Tests Expected to Fail](#tests-expected-to-fail)
+  - [Additional Notes](#additional-notes)
 - [Manual Testing Documents](#manual-testing-documents)
 - [Deliverables](#deliverables)
 
@@ -163,6 +164,7 @@ npm run test:pets-api
 ```bash
 npm run test:all
 ```
+
 - **Test results and HTML reports** are generated automatically. Latest version are uploaded under `playwright-reports/`
 
 ### Toggling Headless/Headed Mode
@@ -226,44 +228,67 @@ Some Playwright API tests may fail, especially those with titles containing `@bu
 - **Test Cases with `@bug`**: These are placeholders for known issues that should be addressed during future development cycles.
 - **Action**: These failures should be expected, and no further action is needed unless the related bugs are fixed and the tests still fail.
 
-### Tests To Be Failing
+### Tests Expected to Fail
 
-1. **POST /owners**:
-   - **Issue**: The API does not return the expected response body upon successful creation.
-2. **GET /owners/{ownerId}**:
+1. **GET /owners/{ownerId}/pets/{petId} API Tests**:
+   - **Test**: Get a different pet by Pet ID for the same owner `@happy @bug`
+   - **Issue**: Incorrect response for getting a different pet by Pet ID.
 
-   - **Issue**: The API does not return the correct response status code or response body when the owner is not found (`NOT_FOUND`).
+2. **GET /owners/{ownerId}/pets/{petId} API Tests**:
+   - **Test**: Get a pet with NOT FOUND Owner ID `@bug`
+   - **Issue**: The API does not return the correct response when the owner ID is not found.
 
-3. **PUT /owners/{ownerId}**:
+3. **GET /owners/{ownerId}/pets/{petId} API Tests**:
+   - **Test**: Get a pet with NOT FOUND Pet ID `@bug`
+   - **Issue**: The API does not return the correct response when the pet ID is not found.
 
-   - **Issue**: The API does not return the correct response status code or response body when the owner is not found (`NOT_FOUND`).
+4. **GET /owners/{ownerId}/pets/{petId} API Tests**:
+   - **Test**: Get a pet by Invalid Owner ID - BAD REQUEST `@bug`
+   - **Issue**: The API does not handle invalid owner ID requests correctly.
 
-4. **DELETE /owners/{ownerId}**:
+5. **PUT /owners/{ownerId}/pets/{petId} API Tests**:
+   - **Test**: Edit a pet `@happy @bug`
+   - **Issue**: Incorrect response when editing a pet.
 
-   - **Issue**: The DELETE endpoint is not implemented, even though the assignment instructions indicate that it should be.
+6. **PUT /owners/{ownerId}/pets/{petId} API Tests**:
+   - **Test**: Edit a pet without name - BAD REQUEST `@bug`
+   - **Issue**: The API does not return the correct BAD REQUEST response when the pet name is missing.
 
-5. **POST /owners/{ownerId}/pets**:
+7. **PUT /owners/{ownerId}/pets/{petId} API Tests**:
+   - **Test**: Edit a pet with NOT FOUND Owner ID - NOT FOUND `@bug`
+   - **Issue**: The API does not return the correct response when the owner ID is not found.
 
-   - **Issue**: The documentation contains an incorrect payload.
-   - **Issue**: The API does not return the expected response status code or body when sending the correct payload.
-   - **Issue**: The API does not return the expected response status code or body when the owner is not found (`NOT_FOUND`).
+8. **PUT /owners/{ownerId}/pets/{petId} API Tests**:
+   - **Test**: Edit a pet with NOT FOUND Pet ID - NOT FOUND `@bug`
+   - **Issue**: The API does not return the correct response when the pet ID is not found.
 
-6. **PUT /owners/{ownerId}/pets/{petId}**:
+9. **POST /owners/{ownerId}/pets API Tests**:
+   - **Test**: Create a new pet `@happy @bug`
+   - **Issue**: The API does not return the correct response when creating a new pet.
 
-   - **Issue**: The documentation contains an incorrect payload.
-   - **Issue**: The API does not return the expected response status code or body when the owner or pet is not found (`NOT_FOUND`).
+10. **POST /owners/{ownerId}/pets API Tests**:
+    - **Test**: Create a new pet without name - BAD REQUEST `@bug`
+    - **Issue**: The API does not return the correct BAD REQUEST response when the pet name is missing.
 
-7. **GET /vets/{vetId}**:
+11. **POST /owners/{ownerId}/pets API Tests**:
+    - **Test**: Create a new pet for NOT FOUND Owner ID `@bug`
+    - **Issue**: The API does not return the correct response when the owner ID is not found.
 
-   - **Issue**: The API does not return the expected response status code or body upon a successful request.
+12. **GET /owners/{ownerId} API Tests**:
+    - **Test**: Get a pet owner by NOT FOUND - ID `@bug`
+    - **Issue**: The API does not return the correct response when the owner ID is not found.
 
-8. **POST /owners/{ownerId}/pets/{petId}/visits**:
+13. **POST /owners API Tests**:
+    - **Test**: Create a new pet owner `@happy @bug`
+    - **Issue**: The API does not return the correct response when creating a new owner.
 
-   - **Issue**: The API does not return the correct response status code or body when the visit description is missing (`BAD_REQUEST`).
-   - **Issue**: The API does not return the correct response status code or body when the pet is not found (`NOT_FOUND`).
+14. **PUT /owners/{ownerId} API Tests**:
+    - **Test**: Edit an owner with NOT FOUND Owner ID `@bug`
+    - **Issue**: The API does not return the correct response when the owner ID is not found.
+    
+### Additional Notes
 
-9. **GET /owners/{ownerId}/pets/{petId}/visits**:
-   - **Issue**: The API does not return the correct response status code or body when the pet is not found (`NOT_FOUND`).
+The tests marked as `@bug` in the test titles correspond to known issues documented in the project. These tests are expected to fail until the respective bugs are fixed.
 
 ## Manual Testing Documents
 
