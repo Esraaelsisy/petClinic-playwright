@@ -11,9 +11,6 @@ export class OwnerOverviewPage{
     readonly editOwnerButton: Locator
     readonly addNewPetButton: Locator
     readonly petdetailsRow: Locator
-    readonly petNameLabel: Locator
-    readonly petBirthDateLabel: Locator
-    readonly petTypeLabel: Locator
     readonly editPetLink: Locator
     readonly addVisitLink: Locator
     
@@ -27,10 +24,8 @@ export class OwnerOverviewPage{
         this.editOwnerButton = page.getByRole('link').filter({hasText:"Edit Owner"})
         this.addNewPetButton = page.getByRole('link').filter({hasText: "Add New Pet"})
         this.petdetailsRow =  page.locator('table.table.table-striped').nth(1).locator('tr').first()
-        this.petNameLabel= this.petdetailsRow.getByRole('link').first()
-        this.petBirthDateLabel = this.petdetailsRow.locator('dd').nth(1)
-        this.petTypeLabel = this.petdetailsRow.locator('dd').nth(2)
-        this.editPetLink = this.petdetailsRow.locator('a').nth(1)
+        this.editPetLink = this.petdetailsRow.locator('a').filter({hasText: "Edit Pet"})
+        this.addVisitLink = this.petdetailsRow.locator('a').filter({hasText: "Add Visit"})
     }
 
     async gotoOwnerInfoPage()
@@ -43,14 +38,25 @@ export class OwnerOverviewPage{
         await this.addNewPetButton.click()
     }
 
-    async gotoEditNewPetPage()
+    async gotoEditPetPage()
     {
         await this.editPetLink.click()
+    }
+    async gotoEditPetPageWithPetName(petName: string)
+    {
+        const petDetailsRow= this.page.locator('table.table.table-striped').nth(1).locator('tr').filter({hasText:petName}).first()
+        await petDetailsRow.locator('a').filter({hasText: "Edit Pet"}).click()
     }
 
     async gotoVisitsPage()
     {
         await this.addVisitLink.click()
+    }
+
+    async gotoVisitsPageWithPetName(petName: string)
+    {
+        const petDetailsRow= this.page.locator('table.table.table-striped').nth(1).locator('tr').filter({hasText:petName}).first()
+        await petDetailsRow.locator('a').filter({hasText: "Add Visit"}).click()
     }
 
     async validateOwnerDetails(firstName: string,lastName: string, address: string, city: string, telephone: string){
@@ -59,5 +65,16 @@ export class OwnerOverviewPage{
         await expect(this.ownerAddressText).toContainText(address)
         await expect(this.ownerCityText).toContainText(city)
         await expect(this.ownerTelephoneText).toContainText(telephone)
+    }
+
+    async validatePetDetails(ownerName: string,petName: string, type: string){
+        await expect(this.ownerNameText).toContainText(ownerName)
+        const petDetailsRow= this.page.locator('table.table.table-striped').nth(1).locator('tr').filter({hasText:petName}).first()
+        const petNameLabel= petDetailsRow.getByRole('link').first()
+        await expect(petNameLabel).toContainText(petName)
+        const petTypeLabel = petDetailsRow.locator('dd').nth(2)
+        await expect(petTypeLabel).toContainText(type)
+        const petBirthDateLabel = petDetailsRow.locator('dd').nth(1)
+       // await expect(petBirthDateLabel).toContainText(birthDate)
     }
 }
