@@ -28,12 +28,12 @@ jobs:
 
       # Wait for the application to be ready
       - name: Wait for the app to be ready
-        run: sleep 20  # Adjust the time based on your app's startup time
+        run: sleep 20 # Adjust the time based on your app's startup time
 
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install dependencies
         run: npm install
@@ -41,24 +41,24 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Owner Tests file 
-        run: npx playwright test e2e/ui/specs/ownerInfoTests.spec.ts    
-        continue-on-error: true 
-
-      - name: Run Pets Tests file 
-        run: npx playwright test e2e/ui/specs/petsTests.spec.ts    
+      - name: Run Owner Tests file
+        run: npx playwright test e2e/ui/specs/ownerInfoTests.spec.ts
         continue-on-error: true
 
-      - name: Run Visits Tests file 
-        run: npx playwright test e2e/ui/specs/visitsTests.spec.ts    
+      - name: Run Pets Tests file
+        run: npx playwright test e2e/ui/specs/petsTests.spec.ts
         continue-on-error: true
 
-      - name: Run Vets Tests file 
-        run: npx playwright test e2e/ui/specs/vetsTests.spec.ts   
+      - name: Run Visits Tests file
+        run: npx playwright test e2e/ui/specs/visitsTests.spec.ts
         continue-on-error: true
-        
+
+      - name: Run Vets Tests file
+        run: npx playwright test e2e/ui/specs/vetsTests.spec.ts
+        continue-on-error: true
+
       - name: Upload Playwright test report
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: playwright-ui-report
+          path: playwright-ui-report
