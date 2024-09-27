@@ -1,6 +1,6 @@
 {
     "createPetSuccess": {
-      "ownerId": "15",
+      "ownerId": "3",
       "pet": {
         "id": "2",
         "name": "leooo",
@@ -9,7 +9,7 @@
       }
     },
     "createPetWithoutName": {
-      "ownerId": "15",
+      "ownerId": "3",
       "pet": {
         "id": "4",
         "birthDate": "2010-09-07",
@@ -17,7 +17,7 @@
       }
     },
     "createPetEmptyBody": {
-      "ownerId": "15",
+      "ownerId": "3",
       "pet": {}
     },
     "createPetOwnerNotFound": {

@@ -28,7 +28,7 @@
       "telephone": "6085551023"
     },
     "editOwnerSuccess": {
-      "ownerId": "15",
+      "ownerId": "4",
       "firstName": "John",
       "lastName": "Doe",
       "address": "123 Main St",
@@ -36,21 +36,21 @@
       "telephone": "1234567890"
     },
     "editOwnerMissingFirstName": {
-      "ownerId": "90",
+      "ownerId": "5",
       "lastName": "Doe",
       "address": "123 Main St",
       "city": "Springfield",
       "telephone": "1234567890"
     },
     "editOwnerMissingLastName": {
-      "ownerId": "90",
+      "ownerId": "6",
       "firstName": "John",
       "address": "123 Main St",
       "city": "Springfield",
       "telephone": "1234567890"
     },
     "OwnerForEdit": {
-      "ownerId": "90"
+      "ownerId": "4"
     },
     "OwnerNotFound": {
       "ownerId": "500"
