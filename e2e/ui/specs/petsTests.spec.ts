@@ -8,7 +8,7 @@ let pm: PageManager
 test.describe('Add Pets Tests', async () => {
 
   // Test to add a new pet for an existing owner
-  test('add a new Pet', async ({ page, ownersFixture }) => {
+  test('add a new Pet @happy', async ({ page, ownersFixture }) => {
     const pm = new PageManager(page)
 
     await test.step('Select an owner from the list based on criteria', async () => {
@@ -41,7 +41,7 @@ test.describe('Add Pets Tests', async () => {
 test.describe('Edit Pets Tests', async () => {
 
   // Test to add a new pet for an existing owner
-  test('edit a Pet', async ({ page, ownersFixture }) => {
+  test('edit a Pet @happy', async ({ page, ownersFixture }) => {
     const pm = new PageManager(page)
 
     await test.step('Select an owner from the list based on criteria', async () => {

@@ -5,10 +5,10 @@ import { VisitsTestData } from "../data/uiTestData.json"
 let pm: PageManager
 
 // Describes the test suite for adding pet visits
-test.describe('Add Pet Visits Tests @happy', async () => {
+test.describe('Add Pet Visits Tests', async () => {
 
   // Test to add a new visit for a pet with valid data
-  test('add Pet Visit with valid data', async ({ page, ownersFixture }) => {
+  test('add Pet Visit with valid data @happy', async ({ page, ownersFixture }) => {
     const pm = new PageManager(page)
 
     await test.step('Select an owner from the list', async () => {
