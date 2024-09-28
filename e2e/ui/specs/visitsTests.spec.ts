@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures/my-hooks"
+import { test } from "../fixtures/my-hooks"
 import { PageManager } from "../pages/pageManager"
 import { VisitsTestData } from "../data/uiTestData.json"
 

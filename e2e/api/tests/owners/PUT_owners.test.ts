@@ -1,4 +1,4 @@
-import { test, expect, RequestUtils, ResponseUtils, EndPoints } from '../../fixtures/testSetup';  // Import shared setup
+import { test, RequestUtils, ResponseUtils, EndPoints } from '../../fixtures/testSetup';  // Import shared setup
 import ownerData from '../../data/ownerData.json'; // Import the JSON data
 
 test.describe('PUT /owners/{ownerId} Tests', () => {

@@ -1,4 +1,4 @@
-import { Locator, Page , expect } from "@playwright/test"
+import { Locator, Page } from "@playwright/test"
 import { HeaderPage } from "./headerPage"
 
 export class OwnerInfoPage{

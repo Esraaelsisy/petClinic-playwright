@@ -1,4 +1,4 @@
-import { test, expect, RequestUtils, ResponseUtils, EndPoints } from '../../fixtures/testSetup';
+import { test, RequestUtils, ResponseUtils, EndPoints } from '../../fixtures/testSetup';
 import petData from '../../data/petData.json';  // Import the JSON data
 
 test.describe('POST /owners/{ownerId}/pets API Tests', () => {

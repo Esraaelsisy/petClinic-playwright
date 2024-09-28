@@ -1,4 +1,4 @@
-import { APIRequestContext, APIResponse, expect } from '@playwright/test';
+import { APIRequestContext, APIResponse } from '@playwright/test';
 
 export class RequestUtils {
   // Default headers used in all requests
