@@ -44,7 +44,7 @@ Additionally, the repository includes manual testing documents for further evalu
 
 ```bash
 ├── e2e/
-│   ├── ui/
+│   ├── ui/                              # UI tests 
 │   │   ├── data/
 │   │   │   └── uiTestData.json          # UI test data
 │   │   ├── fixtures/
@@ -65,10 +65,10 @@ Additionally, the repository includes manual testing documents for further evalu
 │   │   │   ├── vetsTests.spec.ts
 │   │   │   └── visitsTests.spec.ts
 │
-│   ├── api/
+│   ├── api/                             # API tests
 │   │   ├── data/
-│   │   │   ├── ownerData.json           # Owner-related API test data
-│   │   │   └── petData.json             # Pet-related API test data
+│   │   │   ├── ownerData.json           # Owner API test data
+│   │   │   └── petData.json             # Pet API test data
 │   │   ├── fixtures/
 │   │   │   ├── schemaSetup.ts           # JSON Schema setup for API tests
 │   │   │   └── testSetup.ts             # API test setup
@@ -285,7 +285,7 @@ Some Playwright API tests may fail, especially those with titles containing `@bu
 14. **PUT /owners/{ownerId} API Tests**:
     - **Test**: Edit an owner with NOT FOUND Owner ID `@bug`
     - **Issue**: The API does not return the correct response when the owner ID is not found.
-    
+
 ### Additional Notes
 
 The tests marked as `@bug` in the test titles correspond to known issues documented in the project. These tests are expected to fail until the respective bugs are fixed.
