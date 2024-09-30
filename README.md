@@ -44,7 +44,7 @@ Additionally, the repository includes manual testing documents for further evalu
 
 ```bash
 ├── e2e/
-│   ├── ui/                              # UI tests 
+│   ├── ui/                              # UI tests
 │   │   ├── data/
 │   │   │   └── uiTestData.json          # UI test data
 │   │   ├── fixtures/
@@ -107,6 +107,12 @@ Additionally, the repository includes manual testing documents for further evalu
 
 ```bash
 npm install
+```
+
+- **Install Playwright**
+
+```bash
+npm init playwright@latest
 ```
 
 ## Running the Tests
@@ -231,54 +237,67 @@ Some Playwright API tests may fail, especially those with titles containing `@bu
 ### Tests Expected to Fail
 
 1. **GET /owners/{ownerId}/pets/{petId} API Tests**:
+
    - **Test**: Get a different pet by Pet ID for the same owner `@happy @bug`
    - **Issue**: Incorrect response for getting a different pet by Pet ID.
 
 2. **GET /owners/{ownerId}/pets/{petId} API Tests**:
+
    - **Test**: Get a pet with NOT FOUND Owner ID `@bug`
    - **Issue**: The API does not return the correct response when the owner ID is not found.
 
 3. **GET /owners/{ownerId}/pets/{petId} API Tests**:
+
    - **Test**: Get a pet with NOT FOUND Pet ID `@bug`
    - **Issue**: The API does not return the correct response when the pet ID is not found.
 
 4. **GET /owners/{ownerId}/pets/{petId} API Tests**:
+
    - **Test**: Get a pet by Invalid Owner ID - BAD REQUEST `@bug`
    - **Issue**: The API does not handle invalid owner ID requests correctly.
 
 5. **PUT /owners/{ownerId}/pets/{petId} API Tests**:
+
    - **Test**: Edit a pet `@happy @bug`
    - **Issue**: Incorrect response when editing a pet.
 
 6. **PUT /owners/{ownerId}/pets/{petId} API Tests**:
+
    - **Test**: Edit a pet without name - BAD REQUEST `@bug`
    - **Issue**: The API does not return the correct BAD REQUEST response when the pet name is missing.
 
 7. **PUT /owners/{ownerId}/pets/{petId} API Tests**:
+
    - **Test**: Edit a pet with NOT FOUND Owner ID - NOT FOUND `@bug`
    - **Issue**: The API does not return the correct response when the owner ID is not found.
 
 8. **PUT /owners/{ownerId}/pets/{petId} API Tests**:
+
    - **Test**: Edit a pet with NOT FOUND Pet ID - NOT FOUND `@bug`
    - **Issue**: The API does not return the correct response when the pet ID is not found.
 
 9. **POST /owners/{ownerId}/pets API Tests**:
+
    - **Test**: Create a new pet `@happy @bug`
    - **Issue**: The API does not return the correct response when creating a new pet.
 
 10. **POST /owners/{ownerId}/pets API Tests**:
+
     - **Test**: Create a new pet without name - BAD REQUEST `@bug`
     - **Issue**: The API does not return the correct BAD REQUEST response when the pet name is missing.
 
 11. **POST /owners/{ownerId}/pets API Tests**:
+
     - **Test**: Create a new pet for NOT FOUND Owner ID `@bug`
     - **Issue**: The API does not return the correct response when the owner ID is not found.
 
 12. **GET /owners/{ownerId} API Tests**:
+
     - **Test**: Get a pet owner by NOT FOUND - ID `@bug`
     - **Issue**: The API does not return the correct response when the owner ID is not found.
 
 13. **POST /owners API Tests**:
+
     - **Test**: Create a new pet owner `@happy @bug`
     - **Issue**: The API does not return the correct response when creating a new owner.
 
